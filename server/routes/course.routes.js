@@ -31,7 +31,7 @@ courseRouter.route('/:id')
     .post(
         isLoggedIn,
         authorizedRoles('ADMIN'),
-        upload.single('thumbnail'),
+        upload.single('lecture'),
         addLectureToCourseById
     );
 
