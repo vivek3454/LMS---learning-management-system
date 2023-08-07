@@ -16,6 +16,7 @@ courseRouter.route('/')
 courseRouter.route('/:id')
     .get(
         isLoggedIn,
+        authorizeSubscriber,
         getLecturesByCourseId
     )
     .put(
