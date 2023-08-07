@@ -40,6 +40,10 @@ const userSchema = new Schema({
     },
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
+    subscription: {
+        id: String,
+        status: String
+    }
 }, {
     timestamp: true
 })
@@ -79,5 +83,5 @@ userSchema.methods = {
     }
 }
 
-const User = model('user', userSchema)
+const User = model('User', userSchema)
 export default User;
