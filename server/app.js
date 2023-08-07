@@ -5,6 +5,7 @@ import cookieParser from'cookie-parser';
 import userRouter from './routes/user.route.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import courseRouter from './routes/course.routes.js';
+import paymentRouter from './routes/payment.routes.js';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cors({
 // routes of 3 modules
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/courses',courseRouter);
+app.use('/api/v1/payments',paymentRouter);
 
 
 // route for 404
@@ -30,6 +32,7 @@ app.all('*', (req, res)=>{
     res.status(404).send('OOPS!! 404 page not found')
 })
 
+// handling errors
 app.use(errorMiddleware);
 
 export default app ; 
