@@ -1,9 +1,13 @@
+import {Route,Routes} from 'react-router-dom';
 
+import HomePage from './Pages/HomePage';
 function App() {
 
   return (
     <>
-      <button>Click me</button>
+    <Routes>
+      <Route path="/" element={<HomePage/>}/>
+    </Routes>
     </>
   )
 }
