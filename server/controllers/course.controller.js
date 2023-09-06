@@ -1,5 +1,5 @@
-import Course from "../models/course.model";
-import AppError from "../utils/error.util";
+import Course from "../models/course.model.js";
+import AppError from "../utils/error.util.js";
 import cloudinary from 'cloudinary';
 import fs from 'fs/promises';
 
