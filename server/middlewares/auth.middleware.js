@@ -1,6 +1,7 @@
 import AppError from "../utils/error.util.js";
 import jwt from "jsonwebtoken";
 
+// get user info from jwt
 const isLoggedIn = async (req, res, next) => {
     const { token } = req.cookies;
 
@@ -14,6 +15,7 @@ const isLoggedIn = async (req, res, next) => {
     next();
 }
 
+// check user is admin or else
 const authorizedRoles = (...roles) => async (req, res, next) => {
     const currentUserRole = req.user.role;
     if (!roles.includes(currentUserRole)) {
@@ -22,6 +24,7 @@ const authorizedRoles = (...roles) => async (req, res, next) => {
     next()
 }
 
+// check user is subscribed
 const authorizeSubscriber = async(req, res, next) => {
     const subsciption = req.user.subsciption;
     const currentUserRole = req.user.role;

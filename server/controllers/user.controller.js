@@ -10,6 +10,7 @@ const cookieOptions = {
     secure: true
 }
 
+// create user account
 const register = async (req, res, next) => {
     const { fullName, email, password } = req.body;
     console.log(email);
@@ -36,7 +37,7 @@ const register = async (req, res, next) => {
     if (!user) {
         return next(new AppError('User registration failed, please try again', 400))
     }
-
+    // upload file to cloudinary
     if (req.file) {
         try {
             const result = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -60,7 +61,6 @@ const register = async (req, res, next) => {
         }
     }
 
-    // TODO: file upload
     await user.save();
 
     user.password = undefined;
@@ -76,6 +76,7 @@ const register = async (req, res, next) => {
 
 }
 
+// login user
 const login = async (req, res, next) => {
     try {
 
@@ -89,7 +90,7 @@ const login = async (req, res, next) => {
         if (!user || !user.comparePassword(password)) {
             return next(new AppError('Email or Password does not match', 400));
         }
-
+        // generate jwt token and store in cookies
         const token = user.generateJWTToken();
         user.password = undefined;
 
@@ -105,6 +106,7 @@ const login = async (req, res, next) => {
 
 }
 
+// logout user
 const logout = (req, res) => {
     res.cookie('token', null, {
         maxAge: 0,
@@ -118,6 +120,7 @@ const logout = (req, res) => {
     })
 }
 
+// get user profile
 const profile = (req, res) => {
     try {
         const userId = req.user.id;
@@ -134,6 +137,7 @@ const profile = (req, res) => {
 
 }
 
+// 
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
     if (!email) {
@@ -143,15 +147,16 @@ const forgotPassword = async (req, res) => {
     if (!user) {
         return next(new AppError('Email not registered', 400));
     }
-
+    // generate password reset token
     const resetToken = await user.generatePasswordResetToken();
 
     await user.save();
-
+    // create reset password url
     const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password${resetToken}`;
 
     const subject = 'Reset Password';
     const message = `You can reset your password by clicking <a href=${resetPasswordUrl} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab ${resetPasswordUrl}.\n If you have not requested this, kindly ignore.`;
+    // send email to users email
     try {
         await sendEmail(email, subject, message);
         res.status(200).json({
@@ -166,11 +171,14 @@ const forgotPassword = async (req, res) => {
     }
 
 }
+
+// reset password
 const resetPassword = async (req, res) => {
     const { resetToken } = req.params;
 
     const { password } = req.body;
 
+    // create forgot password token
     const forgotPasswordToken = crypto
         .createHash('sha256')
         .update(resetToken)
@@ -199,6 +207,7 @@ const resetPassword = async (req, res) => {
     })
 }
 
+// change user password
 const changePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     const { id } = req.user;
@@ -236,6 +245,8 @@ const changePassword = async (req, res) => {
         message: 'Password changed successfully!'
     });
 }
+
+// update user info
 const updateUser = async (req, res) => {
     const { fullName } = req.body;
     const { id } = req.user.id;
@@ -251,7 +262,7 @@ const updateUser = async (req, res) => {
     if (req.fullName) {
         user.fullName = fullName;
     }
-
+    // first destroy old file and then upload file to cloudinary
     if (req.file) {
         await cloudinary.v2.uploader.destroy(user.avatar.public_id);
         try {

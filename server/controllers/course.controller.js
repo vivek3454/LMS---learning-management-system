@@ -3,6 +3,7 @@ import AppError from "../utils/error.util.js";
 import cloudinary from 'cloudinary';
 import fs from 'fs/promises';
 
+// get all courses
 const getAllCourses = async (req, res, next) => {
 
     try {
@@ -17,6 +18,7 @@ const getAllCourses = async (req, res, next) => {
     }
 
 }
+// get particular lecture
 const getLecturesByCourseId = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -35,6 +37,7 @@ const getLecturesByCourseId = async (req, res, next) => {
 
 }
 
+// create course
 const createCourse = async (req, res, next) => {
     const { title, description, category, createdBy } = req.body;
 
@@ -59,6 +62,7 @@ const createCourse = async (req, res, next) => {
         );
     }
 
+    // if file in req upload it on cloudinary
     if (req.file) {
         try {
             const result = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -84,6 +88,8 @@ const createCourse = async (req, res, next) => {
         course,
     });
 }
+
+// update course
 const updateCourse = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -110,6 +116,8 @@ const updateCourse = async (req, res, next) => {
         return next(new AppError(error.message, 500));
     }
 }
+
+// remove course
 const removeCourse = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -130,6 +138,7 @@ const removeCourse = async (req, res, next) => {
     }
 }
 
+// add lecture
 const addLectureToCourseById = async (req, res, next) => {
     try {
         const { title, description } = req.body;
@@ -150,7 +159,7 @@ const addLectureToCourseById = async (req, res, next) => {
             description,
             lecture: {}
         };
-
+        // if file in req upload it on cloudinary
         if (req.file) {
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -167,7 +176,6 @@ const addLectureToCourseById = async (req, res, next) => {
             }
         }
 
-        console.log('lecture> ', JSON.stringify(lecutureData));
         course.lectures.push(lecutureData);
 
         course.numbersOfLectures = course.lectures.length;
