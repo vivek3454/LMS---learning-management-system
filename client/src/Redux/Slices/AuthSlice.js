@@ -47,6 +47,24 @@ export const login = createAsyncThunk("/auth/login", async (data) => {
     }
 });
 
+export const logout = createAsyncThunk("/auth/logout", async () => {
+    try {
+        let res = axiosInstance.get("/user/logout");
+        toast.promise(res, {
+            loading: "Wait! logout in progress...",
+            success: (data) => {
+                return data?.data?.message;
+            },
+            error: "Failed to logout",
+        });
+
+        // getting response resolved here
+        res = await res;
+        return res.data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+});
 
 const authSlice = createSlice({
     name: 'auth',
@@ -62,7 +80,12 @@ const authSlice = createSlice({
                 state.data = action?.payload?.user;
                 state.role = action?.payload?.user?.role;
             })
-            
+            .addCase(logout.fulfilled, (state) => {
+                localStorage.clear();
+                state.isLoggedIn = false;
+                state.data = {};
+                state.role = ''
+            })
     }
 });
 
