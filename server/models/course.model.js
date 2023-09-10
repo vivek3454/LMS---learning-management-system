@@ -44,7 +44,7 @@ const courseSchema = new Schema({
             }
         }
     ],
-    numbersOfLectures: {
+    numberOfLectures: {
         type: Number,
         default: 0,
     },
