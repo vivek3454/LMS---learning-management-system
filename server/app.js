@@ -6,6 +6,7 @@ import userRouter from './routes/user.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import courseRouter from './routes/course.routes.js';
 import paymentRouter from './routes/payment.routes.js';
+import { contactUs } from './controllers/contactUs.controller.js';
 
 const app = express();
 
@@ -15,9 +16,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }));
+
 
 
 
@@ -25,6 +27,7 @@ app.use(cors({
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/courses',courseRouter);
 app.use('/api/v1/payments',paymentRouter);
+app.post('/api/v1/contact',contactUs);
 
 
 // route for 404
