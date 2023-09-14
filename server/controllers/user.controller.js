@@ -91,7 +91,7 @@ const login = async (req, res, next) => {
             return next(new AppError('Email or Password does not match', 400));
         }
         // generate jwt token and store in cookies
-        const token = user.generateJWTToken();
+        const token = await user.generateJWTToken();
         user.password = undefined;
 
         res.cookie('token', token, cookieOptions);
