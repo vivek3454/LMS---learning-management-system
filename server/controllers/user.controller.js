@@ -121,10 +121,10 @@ const logout = (req, res) => {
 }
 
 // get user profile
-const profile = (req, res) => {
+const profile = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
 
         res.status(200).json({
             success: true,
@@ -247,9 +247,9 @@ const changePassword = async (req, res) => {
 }
 
 // update user info
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
     const { fullName } = req.body;
-    const { id } = req.user.id;
+    const { id } = req.user;
 
     const user = await User.findById(id);
 
@@ -259,7 +259,7 @@ const updateUser = async (req, res) => {
         )
     }
 
-    if (req.fullName) {
+    if (fullName) {
         user.fullName = fullName;
     }
     // first destroy old file and then upload file to cloudinary
