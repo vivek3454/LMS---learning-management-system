@@ -2,6 +2,7 @@ import AppError from "../utils/error.util.js";
 import { razorpay } from "../server.js";
 import User from "../models/user.model.js";
 import Payment from "../models/payment.model.js";
+import crypto from "crypto"
 
 // get razorpay key
 const getRazorpayApiKey = async (req, res, next) => {
@@ -29,22 +30,22 @@ const buySubscription = async (req, res, next) => {
     if (user.role === "ADMIN") {
       return next(new AppError("Admin cannot purchase a subscription", 400));
     }
-
     // create razorpay subscriptions
-    const subscription = await razorpay.subscriptions.create({
+    let subscription = await razorpay.subscriptions.create({
       plan_id: process.env.RAZORPAY_PLAN_ID,
       customer_notify: 1,
+      total_count: 6,
     });
 
-    user.subscription.id = subscription.id;
-    user.subscription.status = subscription.status;
+    user.subscription.id = subscription?.id;
+    user.subscription.status = subscription?.status;
 
     await user.save();
 
     res.status(200).json({
       success: true,
       message: "Subscribed Successfully",
-      subscription_id: subscription.id,
+      subscription_id: subscription?.id,
     });
   } catch (e) {
     return next(new AppError(e.message, 500));
@@ -65,7 +66,6 @@ const verifySubscription = async (req, res, next) => {
     if (!user) {
       return next(new AppError("Unauthorized, please login"));
     }
-
     const subcsriptionId = user.subscription.id;
 
     const generatedSignature = crypto
