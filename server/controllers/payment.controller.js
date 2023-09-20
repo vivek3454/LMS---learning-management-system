@@ -119,6 +119,10 @@ const cancelSubscription = async (req, res, next) => {
     user.subscription.status = subscription.status;
 
     await user.save();
+    res.status(200).json({
+      success: true,
+      message: 'Unsubscibed successfully',
+    })
   } catch (e) {
     return next(new AppError(e.message, 500));
   }
