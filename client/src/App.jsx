@@ -6,17 +6,19 @@ import Contact from "./Pages/Contact";
 import CourseDescription from "./Pages/Course/CourseDescription";
 import CourseList from "./Pages/Course/CourseList";
 import CreateCourse from "./Pages/Course/CreateCourse";
+import DisplayLectures from "./Pages/Dashboard/DisplayLectures";
 import Denied from "./Pages/Denied";
 import HomePage from "./Pages/HomePage";
 import Login from "./Pages/Login";
 import NotFound from "./Pages/NotFound";
-import SignUp from "./Pages/SignUp";
-import Profile from "./Pages/User/Profile";
-import EditProfile from "./Pages/User/EditProfile";
 import Checkout from "./Pages/Payment/Checkout";
-import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
 import CheckoutFail from "./Pages/Payment/CheckoutFail";
-function App() {
+import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
+import SignUp from "./Pages/SignUp";
+import EditProfile from "./Pages/User/EditProfile";
+import Profile from "./Pages/User/Profile";
+
+const App = () => {
 
   return (
     <>
@@ -41,12 +43,13 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<CheckoutSuccess />} />
           <Route path="/checkout/fail" element={<CheckoutFail />} />
+          <Route path="/course/displaylectures" element={<DisplayLectures />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
-}
+};
 
 export default App;
