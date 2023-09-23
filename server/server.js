@@ -3,7 +3,6 @@ import { config } from 'dotenv';
 import { v2 } from 'cloudinary';
 import connectionToDB from './config/dbConnection.js';
 import Razorpay from 'razorpay';
-config(); // load environment variables from the '.env' file into `process.env` object
 
 const PORT = process.env.PORT || 5001;
 

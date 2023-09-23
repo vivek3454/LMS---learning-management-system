@@ -7,6 +7,9 @@ import errorMiddleware from './middlewares/error.middleware.js';
 import courseRouter from './routes/course.routes.js';
 import paymentRouter from './routes/payment.routes.js';
 import { contactUs } from './controllers/contactUs.controller.js';
+import { config } from 'dotenv';
+
+config(); // load environment variables from the '.env' file into `process.env` object
 
 const app = express();
 
