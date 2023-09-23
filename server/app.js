@@ -6,8 +6,9 @@ import userRouter from './routes/user.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import courseRouter from './routes/course.routes.js';
 import paymentRouter from './routes/payment.routes.js';
-import { contactUs } from './controllers/contactUs.controller.js';
+import { contactUs } from './controllers/miscellaneous.controller.js';
 import { config } from 'dotenv';
+import miscRouter from './routes/miscellaneous.routes.js';
 
 config(); // load environment variables from the '.env' file into `process.env` object
 
@@ -30,7 +31,7 @@ app.use(cors({
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/courses',courseRouter);
 app.use('/api/v1/payments',paymentRouter);
-app.post('/api/v1/contact',contactUs);
+app.use('/api/v1', miscRouter);
 
 
 // route for 404

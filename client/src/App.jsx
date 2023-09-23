@@ -18,6 +18,7 @@ import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
 import SignUp from "./Pages/SignUp";
 import EditProfile from "./Pages/User/EditProfile";
 import Profile from "./Pages/User/Profile";
+import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 
 const App = () => {
 
@@ -38,6 +39,7 @@ const App = () => {
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
           <Route path="/course/create" element={<CreateCourse />} />
           <Route path="/course/addlecture" element={<AddLectures />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
         <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
           <Route path="/user/profile" element={<Profile />} />
