@@ -9,7 +9,7 @@ import {
     Tooltip,
 } from "chart.js";
 import React, { useEffect } from "react";
-import { Bar,Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import { BsCollectionPlayFill, BsTrash } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { FcSalesPerformance } from "react-icons/fc";
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
                 </h1>
 
                 {/* creating the records card and chart for sales and user details */}
-                <div className="grid grid-cols-2 gap-5 m-auto mx-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 m-auto mx-10">
                     {/* displaying the users chart and data */}
                     <div className="flex flex-col items-center gap-10 p-5 shadow-lg rounded-md">
                         {/* for displaying the pie chart */}
@@ -179,7 +179,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* CRUD courses section */}
-                <div className="mx-[10%] w-[80%] self-center flex flex-col items-center justify-center gap-10 mb-10">
+                <div className=" w-[90%] self-center flex flex-col items-center justify-center gap-10 mb-10">
                     <div className="flex w-full items-center justify-between">
                         <h1 className="text-center text-3xl font-semibold">
                             Courses Overview
@@ -207,86 +207,87 @@ const AdminDashboard = () => {
                             Create New Course
                         </button>
                     </div>
+                    <div className=" w-[90%] overflow-x-scroll">
+                        <table className="">
+                            <thead>
+                                <tr>
+                                    <th>S No.</th>
+                                    <th>Course Title</th>
+                                    <th>Course Category</th>
+                                    <th>Instructor</th>
+                                    <th>Total Lectures</th>
+                                    <th>Course Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
 
-                    <table className="table overflow-x-scroll">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Course Title</th>
-                                <th>Course Category</th>
-                                <th>Instructor</th>
-                                <th>Total Lectures</th>
-                                <th>Course Description</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+                            <tbody>
+                                {myCourses?.map((element, index) => {
+                                    return (
+                                        <tr key={element?._id}>
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                <textarea
+                                                    readOnly
+                                                    className="w-40 h-auto bg-transparent resize-none"
+                                                    value={element?.title}
+                                                ></textarea>
+                                            </td>
+                                            <td>{element?.category}</td>
+                                            <td>{element?.createdBy}</td>
+                                            <td>{element?.numberOfLectures}</td>
+                                            <td className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap">
+                                                <textarea
+                                                    readOnly
+                                                    className="w-80 h-auto bg-transparent resize-none"
+                                                    value={element?.description}
+                                                ></textarea>
+                                            </td>
 
-                        <tbody>
-                            {myCourses?.map((element, index) => {
-                                return (
-                                    <tr key={element?._id}>
-                                        <td>{index + 1}</td>
-                                        <td>
-                                            <textarea
-                                                readOnly
-                                                className="w-40 h-auto bg-transparent resize-none"
-                                                value={element?.title}
-                                            ></textarea>
-                                        </td>
-                                        <td>{element?.category}</td>
-                                        <td>{element?.createdBy}</td>
-                                        <td>{element?.numberOfLectures}</td>
-                                        <td className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap">
-                                            <textarea
-                                                readOnly
-                                                className="w-80 h-auto bg-transparent resize-none"
-                                                value={element?.description}
-                                            ></textarea>
-                                        </td>
-
-                                        <td className="flex items-center gap-4">
-                                            {/* to edit the course */}
-                                            <button
-                                                onClick={() =>
-                                                    navigate("/course/create", {
-                                                        state: {
-                                                            initialCourseData: {
-                                                                newCourse: false,
-                                                                ...element,
+                                            <td className="flex items-center gap-4">
+                                                {/* to edit the course */}
+                                                <button
+                                                    onClick={() =>
+                                                        navigate("/course/create", {
+                                                            state: {
+                                                                initialCourseData: {
+                                                                    newCourse: false,
+                                                                    ...element,
+                                                                },
                                                             },
-                                                        },
-                                                    })
-                                                }
-                                                className="bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
-                                            >
-                                                <MdOutlineModeEdit />
-                                            </button>
+                                                        })
+                                                    }
+                                                    className="bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
+                                                >
+                                                    <MdOutlineModeEdit />
+                                                </button>
 
-                                            {/* to delete the course */}
-                                            <button
-                                                onClick={() => handleCourseDelete(element._id)}
-                                                className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-30 text-xl py-2 px-4 rounded-md font-bold"
-                                            >
-                                                <BsTrash />
-                                            </button>
+                                                {/* to delete the course */}
+                                                <button
+                                                    onClick={() => handleCourseDelete(element._id)}
+                                                    className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-30 text-xl py-2 px-4 rounded-md font-bold"
+                                                >
+                                                    <BsTrash />
+                                                </button>
 
-                                            {/* to CRUD the lectures */}
-                                            <button
-                                                onClick={() =>
-                                                    navigate("/course/displaylectures", {
-                                                        state: { ...element },
-                                                    })
-                                                }
-                                                className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-30 text-xl py-2 px-4 rounded-md font-bold"
-                                            >
-                                                <BsCollectionPlayFill />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                                {/* to CRUD the lectures */}
+                                                <button
+                                                    onClick={() =>
+                                                        navigate("/course/displaylectures", {
+                                                            state: { ...element },
+                                                        })
+                                                    }
+                                                    className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-30 text-xl py-2 px-4 rounded-md font-bold"
+                                                >
+                                                    <BsCollectionPlayFill />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </HomeLayout>

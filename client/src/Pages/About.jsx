@@ -6,12 +6,12 @@ import HomeLayout from "../Layouts/HomeLayout";
 const About = () => {
   return (
     <HomeLayout>
-      <div className="pl-20 pt-10 flex flex-col text-white">
+      <div className="pt-20 flex flex-col text-white">
         {/* creating the about page main section */}
-        <div className="flex items-center gap-5 mx-10">
+        <div className="flex items-center flex-col lg:flex-row gap-5 mx-10">
           {/* out moto section */}
-          <section className="w-1/2 space-y-10">
-            <h1 className="text-5xl text-yellow-500 font-semibold">
+          <section className="w-full md:w-1/2 space-y-10">
+            <h1 className="text-5xl text-yellow-500 text-center md:text-left font-semibold">
               Affordable and Quality Education
             </h1>
             <p className="text-xl text-gray-200">
@@ -24,7 +24,7 @@ const About = () => {
           </section>
 
           {/* our moto image section */}
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <img
               id="test1"
               style={{
@@ -38,7 +38,7 @@ const About = () => {
         </div>
 
         {/* top personalities quotes section */}
-        <div className="carousel w-1/2 m-auto my-16">
+        <div className="carousel w-full md:w-1/2 m-auto my-16">
           {celebrities &&
             celebrities.map((celebrity) => (
               <CarouselSlide
