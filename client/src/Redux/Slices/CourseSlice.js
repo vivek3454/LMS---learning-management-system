@@ -56,7 +56,7 @@ export const createNewCourse = createAsyncThunk(
 );
 export const updateCourse = createAsyncThunk(
   "/course/update",
-  async ([id, data]) => {
+  async (data) => {
     try {
       // creating the form data from user data
       let formData = new FormData();
@@ -66,8 +66,12 @@ export const updateCourse = createAsyncThunk(
       formData.append("createdBy", data?.createdBy);
       formData.append("thumbnail", data?.thumbnail);
       
-      console.log(formData.get("title"));
-      const res = axiosInstance.put(`/courses/${id}`, formData);
+      const res = axiosInstance.put(`/courses/${data.id}`, {
+        title: data.title,
+        category: data.category,
+        createdBy: data.createdBy,
+        description: data.description,
+      });
 
       toast.promise(res, {
         loading: "Updating the course...",
