@@ -1,8 +1,9 @@
-import User from "../models/user.model.js";
-import AppError from "../utils/error.util.js";
+import User from '../models/user.model.js';
+import AppError from '../utils/error.util.js';
 import cloudinary from 'cloudinary';
 import fs from 'fs/promises';
-import sendEmail from "../utils/sendEmail.js";
+import sendEmail from '../utils/sendEmail.js';
+import crypto from 'crypto';
 
 const cookieOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -137,8 +138,8 @@ const profile = async (req, res, next) => {
 
 }
 
-// 
-const forgotPassword = async (req, res) => {
+// fogot password
+const forgotPassword = async (req, res, next) => {
     const { email } = req.body;
     if (!email) {
         return next(new AppError('Email is required', 400));
@@ -152,13 +153,13 @@ const forgotPassword = async (req, res) => {
 
     await user.save();
     // create reset password url
-    const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password${resetToken}`;
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
     const subject = 'Reset Password';
     const message = `You can reset your password by clicking <a href=${resetPasswordUrl} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab ${resetPasswordUrl}.\n If you have not requested this, kindly ignore.`;
     // send email to users email
     try {
-        await sendEmail(email, subject, message);
+        await sendEmail(process.env.CONTACT_US_EMAIL, email, subject, message);
         res.status(200).json({
             success: true,
             message: `reset password token has been sent to ${email} successfully`
@@ -173,7 +174,7 @@ const forgotPassword = async (req, res) => {
 }
 
 // reset password
-const resetPassword = async (req, res) => {
+const resetPassword = async (req, res, next) => {
     const { resetToken } = req.params;
 
     const { password } = req.body;
@@ -208,7 +209,7 @@ const resetPassword = async (req, res) => {
 }
 
 // change user password
-const changePassword = async (req, res) => {
+const changePassword = async (req, res, next) => {
     const { oldPassword, newPassword } = req.body;
     const { id } = req.user;
 

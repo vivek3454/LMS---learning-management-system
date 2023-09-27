@@ -7,18 +7,21 @@ import CourseDescription from "./Pages/Course/CourseDescription";
 import CourseList from "./Pages/Course/CourseList";
 import CreateCourse from "./Pages/Course/CreateCourse";
 import AddLectures from "./Pages/Dashboard/AddLecture";
+import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 import DisplayLectures from "./Pages/Dashboard/DisplayLectures";
 import Denied from "./Pages/Denied";
 import HomePage from "./Pages/HomePage";
 import Login from "./Pages/Login";
 import NotFound from "./Pages/NotFound";
+import ChangePassword from "./Pages/Password/ChangePassword";
+import ForgetPassword from "./Pages/Password/ForgotPassword";
+import ResetPassword from "./Pages/Password/ResetPassword";
 import Checkout from "./Pages/Payment/Checkout";
 import CheckoutFail from "./Pages/Payment/CheckoutFail";
 import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
 import SignUp from "./Pages/SignUp";
 import EditProfile from "./Pages/User/EditProfile";
 import Profile from "./Pages/User/Profile";
-import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 
 const App = () => {
 
@@ -32,6 +35,10 @@ const App = () => {
 
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
 
         <Route path="/courses" element={<CourseList />} />
         <Route path="/course/description" element={<CourseDescription />} />

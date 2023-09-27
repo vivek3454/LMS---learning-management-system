@@ -118,6 +118,12 @@ const Login = () => {
                         Login
                     </button>
 
+                    <Link to={"/forgetpassword"}>
+                        <p className="text-center link text-accent cursor-pointer">
+                            Forget Password
+                        </p>
+                    </Link>
+
                     <p className="text-center">
                         Do not have an account ?{" "}
                         <Link to={"/signup"} className="link text-accent cursor-pointer">
