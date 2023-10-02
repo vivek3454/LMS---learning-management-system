@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-const BASE_URL = 'http://localhost:5001/api/v1';
+import axios from "axios";
 
 const axiosInstance = axios.create();
 
-axiosInstance.defaults.baseURL = BASE_URL;
+axiosInstance.defaults.baseURL = import.meta.env.VITE_REACT_BACKEND_URL;
 axiosInstance.defaults.withCredentials = true;
 
 export default axiosInstance;
