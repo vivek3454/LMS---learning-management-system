@@ -68,7 +68,6 @@ const createCourse = async (req, res, next) => {
             const result = await cloudinary.v2.uploader.upload(req.file.path, {
                 folder: "lms",
             });
-            console.log(JSON.stringify(result));
             if (result) {
                 course.thumbnail.public_id = result.public_id;
                 course.thumbnail.secure_url = result.secure_url;
@@ -164,6 +163,7 @@ const addLectureToCourseById = async (req, res, next) => {
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
                     folder: "lms",
+                    resource_type: "video",
                 });
                 if (result) {
                     lecutureData.lecture.public_id = result.public_id;
@@ -172,6 +172,7 @@ const addLectureToCourseById = async (req, res, next) => {
 
                 fs.rm(`uploads/${req.file.filename}`);
             } catch (e) {
+                fs.rm(`uploads/${req.file.filename}`);
                 return next(new AppError(e.message, 500));
             }
         }
