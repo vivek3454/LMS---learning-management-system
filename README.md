@@ -6,6 +6,8 @@
 
 LMS Skills is a powerful Learning Management System that enables users to engage in online education seamlessly. It offers a wide range of features for both users and administrators, including user authentication, course management, subscription-based access, and more.
 
+![LMS](https://res.cloudinary.com/dtoeixvno/image/upload/v1696580794/dakmjxad0hhtkwy9741b.png)
+
 
 
 ## Project Structure
